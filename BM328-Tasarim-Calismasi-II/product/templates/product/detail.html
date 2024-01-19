@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+
+{% block title %} E-Trade | {{ object.title }} {% endblock title %}
+
+
+{% block container-fluid %}
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 justify-content-center">
+            <div class="col-md-4 mb5">
+                <!--Product image-->
+                <img 
+                    class="card-img-top p-2" 
+                    src="{{ object.cover_image.url }}" alt="..."
+                    style="max-height: 300px; width: auto;"    
+                >
+            </div>
+
+            <div class="col-md-8 mb-5">
+                <h5 class="fw-bolder">{{ object.title }}</h5>
+                {% if object.discount_price %}
+                    <p><del class="mt-2 text-danger">{{ object.price }} TL</del></p>
+                    <p>{{ object.discount_price }} TL</p>
+                    <span class="badge rounded-pill bg-danger">
+                        %{{ object.get_discount_percent|floatformat:2 }} indirim.
+                    </span>
+                {% else %}
+                    <p>{{ object.price }} TL</p>
+                {% endif %}
+                <span class="badge rounded-pill bg-info">{{ object.category.title }}</span>
+                <span class="badge rounded-pill bg-info">{{ object.title }}</span>
+                
+                <p>{{ object.content }}</p> 
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center">
+                        <a class="btn btn-outline-dark mt-auto me-4"  
+                            href="{% url 'home' %}">Alışverişe Devam 
+                            <i class="bi bi-cart-fill"></i>
+                        </a>
+                        
+                        <a class="btn btn-outline-dark mt-auto"  
+                            href="{{ object.get_add_to_cart }}">Sepete Ekle<i class="bi-cart-fill me-1"></i></a>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</section>
+
+{% endblock container-fluid %}
+
+
+

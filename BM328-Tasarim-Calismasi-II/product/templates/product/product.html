@@ -1,0 +1,23 @@
+<div class="card mb-3">
+  {% if item.cover_image %}
+  <img src="{{ item.cover_image.url }}" alt="Card image" class="w-100">
+  {% endif%}
+  <div class="card-body">
+    <h5 class="fw-bolder">{{ item.title }}</h5>
+    <p class="btn btn-success btn-sm">{{ item.category.title }}</p>
+    <!-- Product price-->
+    {% if item.discount_price %}
+    <p><del class="mt-2 text-danger">{{ item.price|floatformat:"2g" }} TL</del></p>
+    <p>{{ item.discount_price|floatformat:"2g" }} TL</p>
+    <span class="badge rounded-pill bg-danger">
+      %{{ item.get_discount_percent|floatformat:"2g" }} indirim.
+    </span>
+    {% else %}
+    <p>{{ item.price|floatformat:"2g" }} TL</p>
+    {% endif %}
+
+    <a href="{{ item.get_item_url }}" class="btn mt-auto ">
+      Sepete Ekle
+    </a>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block container-fluid %}
+
+    <div class="container mt-5">
+        <div class="row btn btn-info">
+            <a href="{% url 'carousel_list' %}">Carousel List </a>
+        </div>
+            <hr>
+        <div class="row btn btn-info">
+            <a href="{% url 'page_list' %}">Page List </a>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-sm-12"> 
+                
+            </div>
+        </div>
+    </div>
+
+{% endblock container-fluid %}

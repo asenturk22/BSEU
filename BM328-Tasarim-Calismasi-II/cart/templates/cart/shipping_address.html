@@ -1,0 +1,129 @@
+{% extends 'core/base_without_navbar.html' %}
+{% load crispy_forms_tags %}
+{% block container-fluid %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-6 mt-5">
+            <h2 class="mb-4">Adres Bilgileri:</h2>
+            <hr>
+            <p>&nbsp;</p>
+
+            {% if order.billing_address %}
+                <p>Ekli bir adresiniz var<i> 
+                    <b>{{ order.billing_address.address_text }}</b>
+                </i>  Bu adresi değiştirmek istiyor musunuz?
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>   
+                <hr>
+                <a href="" class="btn btn-warning ml-5">Adres Değiştir</a>
+                <a href="{% url 'cart:payment' %}" class="btn btn-info">Ödemeye Devam Et</a>
+                </p>
+            {% else %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <a href="{% url 'product:summary' %}" class="btn btn-secondary">İptal</a>
+                <button type="submit" class="btn btn-primary btn-lg">Kaydet</a>
+            </form>
+            {% endif %}
+        </div>
+        <div class="col-sm-6 mt-5">
+            {% include 'cart/cart_coupon_snippet.html' %}
+        </div>
+    </div>
+</div>
+{% endblock container-fluid %}
+
+{% comment %}
+
+<style>
+    body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #my_form {
+        width: auto;
+        padding: 40px 40px;
+        border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    input {
+        width: 400px;
+    }
+</style>
+
+{% endcomment %}
+
+{% comment %}
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+
+
+    let country_field = document.getElementById("id_country")
+    country_field.addEventListener("change", getCountryId)
+
+
+    function getCountryId(e) {
+        console.log(e.target.value)
+        let country_id = e.target.value
+
+        const data = { id: country_id };
+
+        let url = " {% url 'cart:cities' %} "
+
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify(data),
+        })
+
+            .then(response => response.json())
+
+            .then(data => {
+                console.log('Success ', data);
+            })
+
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+    }
+
+    let input = document.getElementById('id_name')
+    let select = document.getElementById('select')
+    console.log(select)
+
+    input.classList.add("form-control")
+    for (let i = 0; i < select.length; i++) {
+        select[i].classList.add("form-select")
+    }
+
+</script>
+{% endcomment %}
+
+

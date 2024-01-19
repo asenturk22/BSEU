@@ -1,0 +1,81 @@
+{% load crispy_forms_tags %}
+
+<h4 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-muted">
+        Sepetiniz
+    </span>
+    <span class="badge bg-dark text-white ms-1 rounded-pill">
+        {{ order.items.count }}
+    </span>
+</h4>
+
+<!--CART-->
+
+<ul class="list-group mb-3 z-depth-1">
+    {% for order_item in order.items.all  %}
+    <li class="list-group-item d-flex justify-content-between 
+        lh-condensed   bg-info bg-opacity-10">
+        <div class="container">
+            <h6 class="my-0">
+                {{ order_item.quantity }} x {{ order_item.item.title }}
+            </h6>
+            <small class="text-muted">{{ order_item.item.snip_description }}</small>
+        </div>
+        <span class="text-muted">{{ order_item.final_price }}</span>
+    </li>
+    {% endfor %}
+
+    {% if order.coupon %}
+    <li class="list-group-item d-flex justify-content-between bg-light">
+        <div class="text-success">
+            <h6 class="my-0">
+                Promosyon Kodu
+            </h6>
+            <small>{{ order.coupon.code }}</small>
+        </div>
+        <span class="text-success">-{{ order.coupon.amount }}</span>
+    </li>
+    {% endif %}
+
+    <li class="list-group-item d-flex justify-content-between 
+            bg-info bg-opacity-50">
+        <span>Tutar (TL)</span>
+        <strong>{{ order.total_price }} TL</strong>
+    </li>
+</ul>
+
+<!--promosyon kodu-->
+{% if display_coupon_form %}
+    <form action="{% url 'cart:add-coupon' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <p>&nbsp;</p>
+            <h5>Promosyon Kodu Uygula</h5>
+        </div>
+        <div class="input-group">
+            {{ couponform.code }}
+            <div class="input-group-addon ml-2">
+                <button class="btn btn-info m-0" type="submit">Uygula</button>
+            </div>
+        </div>
+    </form>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block container-fluid %}
+
+    {% include 'page/components/home_carousel.html' %}
+    
+    <!-- PRODUCTS -->
+    <div class="container  mt-5 ">
+        <div class="row">
+        {% for item in products %}
+            <div class="col-sm-3">
+                {% include 'product/product.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endblock container-fluid %}
+
+{% block script %}
+<script>
+$('.carousel').carousel()
+</script>
+{% endblock %}
+

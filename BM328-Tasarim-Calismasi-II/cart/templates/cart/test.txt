@@ -1,0 +1,50 @@
+{% extends 'core/base_without_navbar.html' %}
+
+{% block container-fluid %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <h1>Üye Ol:</h1>
+
+            {% if order.billing_address %}
+            <p>Ekli bir adresiniz var
+                <i><b>{{ order.billing_address.street_address }}</b></i>
+                <a href="" class="btn btn-warning">Adres Değiştir</a>
+                <a href="" class="btn btn-info">Ödeme Devam Et</a>
+            </p>
+            
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">İsim</label>
+                    <input type="text" class="form-control" id="first_name" aria-describedby="first_nameHelp"
+                        name="first_name">
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Soyisim</label>
+                    <input type="text" class="form-control" id="last_name" aria-describedby="last_nameHelp"
+                        name="last_name">
+                </div>
+                <div class="mb-3">
+                    <label for="street_address" class="form-label">Adres</label>
+                    <textarea class="form-control" placeholder="Adres bilgisini giriniz" id="street_address"></textarea>    
+                </div>
+                <div class="mb-3">
+                    <label for="apartment" class="form-label">Apartman  </label>
+                    <input type="apartment" class="form-control" id="apartment" aria-describedby="apartmentHelp"
+                        name="apartment">
+                </div>
+                <div class="mb-3">
+                    <label for="_zip" class="form-label">Posta Kodu</label>
+                    <input type="_zip" class="form-control" id="_zip" name="_zip">
+                </div>
+                <a href="{% url 'product:summary' %}" class="btn btn-secondary">İptal</a>
+                <button href="{% url 'cart:address' %}" class="btn btn-info">Kaydet</a>
+            </form>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock container-fluid %}
